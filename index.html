@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="icon" type="image/png" href="https://i.imgur.com/bE6NkSK.png">
+  <link href="https://fonts.googleapis.com/css2?family=Creepster&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Misfortune Cookie</title>
+  <style>
+    body {
+      background-color: #0e0e0e;
+      color: #f1f1f1;
+      font-family: 'Creepster', cursive, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 5px red;
+    }
+
+    #cookieContainer {
+      position: relative;
+      width: 400px;
+      height: 150px;
+    }
+
+    .cookie-img {
+      position: absolute;
+      width: 150px;
+      height: auto;
+      cursor: pointer;
+      transition: transform 0.5s ease, opacity 0.3s ease;
+      z-index: 20;
+    }
+
+    #leftHalf, #rightHalf { opacity: 0; }
+    #leftHalf { left: 0; }
+    #rightHalf { right: 0; }
+
+    #fortune {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.5);
+      background: url('https://i.imgur.com/luDTXPd.png') no-repeat center/cover;
+      color: #000;
+      font-size: 1rem;
+      width: 350px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.5s ease, transform 0.8s ease;
+      z-index: 10;
+      white-space: nowrap;
+    }
+
+    @keyframes flicker {
+      0%,100%{opacity:1}10%{opacity:.8}20%{opacity:1}30%{opacity:.6}40%{opacity:1}50%{opacity:.9}60%{opacity:.95}70%{opacity:1}80%{opacity:.85}90%{opacity:1}
+    }
+    .flicker{animation:flicker 1s ease-in-out}
+
+    .eye {
+      position: fixed;
+      width: 80px;
+      height: 80px;
+      background: url('https://i.imgur.com/bE6NkSK.png') no-repeat center/contain;
+      pointer-events: none;
+      z-index: 999;
+      opacity: 0;
+      animation: eyeAppear 2s forwards;
+    }
+    @keyframes eyeAppear {
+      0% {opacity:0; transform: scale(0.5);} 10%{opacity:1; transform: scale(1);} 90%{opacity:1;} 100%{opacity:0; transform: scale(0.5);} 
+    }
+
+    #resetBtn {
+      margin-top: 220px;
+      background:#222;
+      color:#f1f1f1;
+      border:1px solid #f1f1f1;
+      padding:10px 20px;
+      border-radius:5px;
+      font-size:1rem;
+      cursor:pointer;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 5;
+      transition: opacity 0.5s ease;
+    }
+    #resetBtn:hover{background:#444}
+  </style>
+</head>
+<body>
+  <h1>🔮 misfortune cookie 🔮</h1>
+  <div id="cookieContainer">
+    <img id="wholeCookie" class="cookie-img" style="left:50%;transform:translateX(-50%);" src="https://i.imgur.com/2xa4YjM.png" alt="Fortune Cookie" />
+    <img id="leftHalf" class="cookie-img" style="transform: translateX(-70px);" src="https://i.imgur.com/iEkPmYM.png" alt="Left Half" />
+    <img id="rightHalf" class="cookie-img" style="transform: translateX(70px);" src="https://i.imgur.com/OQ0uT4C.png" alt="Right Half" />
+    <div id="fortune">🍪</div>
+  </div>
+  <button id="resetBtn">reset the cookie</button>
+  <audio id="crackSound" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/03/30/audio_67dbe492d6.mp3?filename=crack-2-113172.mp3"></audio>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const whole   = document.getElementById('wholeCookie');
+      const left    = document.getElementById('leftHalf');
+      const right   = document.getElementById('rightHalf');
+      const fortune = document.getElementById('fortune');
+      const audio   = document.getElementById('crackSound');
+      const reset   = document.getElementById('resetBtn');
+
+      const fortunes = [
+        "You are always being watched.",
+        "You will sneeze and break something valuable.",
+        "You should avoid the ceiling fan tonight.",
+        "You will enter a room and forget why.",
+        "You are being searched online right now.",
+        "You will receive an email that ruins your week.",
+        "You have been chosen by a bird.",
+        "You laughed too loudly. They heard.",
+        "Your phone is listening closely.",
+        "Your sock will return wetter.",
+        "You will hear a doorbell that lies.",
+        "Your mirror will blink when you do.",
+        "You will lose your keys when most needed.",
+        "Your printer will jam at the worst time.",
+        "Your shopping cart will check itself out.",
+        "Your coffee will taste like regret.",
+        "You will itch. Someone is watching.",
+        "Your name is written in the clouds.",
+        "Your browser is humming softly.",
+        "Your pencil will snap under pressure.",
+        "Your light will flicker without reason.",
+        "Your shadow will lag behind you.",
+        "Your old tweet will resurface.",
+        "Your chair will squeak at the worst time.",
+        "You will be followed by a raincloud.",
+        "Your shoe will betray you mid-step.",
+        "Your Wi-Fi will fail right before the upload.",
+        "Your smart speaker will laugh tonight.",
+        "Your pet is staring at something else.",
+        "Your password has changed without you.",
+        "Your plant fears your presence.",
+        "Your alarm will forget the exam.",
+        "Your middle name is known to strangers.",
+        "Your autocorrect will reveal too much.",
+        "Your favorite mug will crack tonight.",
+        "Your streetlight will go dark.",
+        "Your seat has already been taken.",
+        "You will get a mystery notification.",
+        "Your tire will find a pothole.",
+        "Your playlist will betray you.",
+        "Your pen will leak in your pocket.",
+        "Your meeting began without you.",
+        "Your elevator will skip your floor.",
+        "Your receipt will total more than it should.",
+        "Your echo will come back different.",
+        "Your photo app will open itself.",
+        "Your lock will jam tomorrow.",
+        "Your email will send before it's ready.",
+        "Your room will feel colder.",
+        "Your calendar forgot a birthday."
+      ];
+
+      const maybeShowEye = () => {
+        if (Math.random() < 0.5) {
+          const eye = document.createElement('div');
+          eye.className = 'eye';
+          eye.style.left = `${Math.random() * (window.innerWidth - 80)}px`;
+          eye.style.top  = `${Math.random() * (window.innerHeight - 80)}px`;
+          document.body.appendChild(eye);
+          setTimeout(() => eye.remove(), 2000);
+        }
+      };
+
+      whole.addEventListener('click', () => {
+        const msg = fortunes[Math.floor(Math.random() * fortunes.length)];
+
+        whole.style.opacity = 0;
+        left.style.opacity  = 1;
+        right.style.opacity = 1;
+        left.style.transform  = 'translateX(-70px) translateY(0) rotate(45deg)';
+        right.style.transform = 'translateX(70px) translateY(0) rotate(15deg)';
+
+        audio.currentTime = 0;
+        audio.play().catch(()=>{});
+
+        fortune.textContent = msg;
+        fortune.style.opacity   = 1;
+        fortune.style.transform = 'translate(-50%, -100%) scale(1)';
+        fortune.classList.add('flicker');
+        setTimeout(() => fortune.classList.remove('flicker'), 1000);
+
+        whole.style.pointerEvents = 'none';
+
+        reset.style.opacity = 1;
+        reset.style.pointerEvents = 'auto';
+        maybeShowEye();
+      });
+
+      reset.addEventListener('click', () => {
+        whole.style.opacity = 1;
+        left.style.opacity = 0;
+        right.style.opacity = 0;
+        left.style.transform = right.style.transform = 'none';
+        fortune.style.opacity = 0;
+        fortune.style.transform = 'translate(-50%, -50%) scale(0.5)';
+        fortune.textContent = '🍪';
+        reset.style.opacity = 0;
+        reset.style.pointerEvents = 'none';
+        whole.style.pointerEvents = 'auto';
+      });
+    });
+  </script>
+</body>
+</html>
