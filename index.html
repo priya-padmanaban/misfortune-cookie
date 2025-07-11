@@ -98,8 +98,27 @@
     }
     #resetBtn:hover{background:#444}
   </style>
+<style>
+    #loadingScreen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+      color: red;
+      font-family: 'Creepster', cursive, sans-serif;
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      animation: flicker 2s infinite;
+    }
+  </style>
 </head>
 <body>
+  <div id="loadingScreen">summoning your misfortune...</div>
   <h1>🔮 misfortune cookie 🔮</h1>
   <div id="cookieContainer">
     <img id="wholeCookie" class="cookie-img" style="left:50%;transform:translateX(-50%);" src="https://i.imgur.com/2xa4YjM.png" alt="Fortune Cookie" />
@@ -112,6 +131,8 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      const loading = document.getElementById('loadingScreen');
+      setTimeout(() => loading.style.display = 'none', 2000);
       const whole   = document.getElementById('wholeCookie');
       const left    = document.getElementById('leftHalf');
       const right   = document.getElementById('rightHalf');
