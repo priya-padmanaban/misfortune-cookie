@@ -18,19 +18,16 @@
       height: 100vh;
       overflow: hidden;
     }
-
     h1 {
       font-size: 2rem;
       margin-bottom: 20px;
       text-shadow: 2px 2px 5px red;
     }
-
     #cookieContainer {
       position: relative;
       width: 400px;
       height: 150px;
     }
-
     .cookie-img {
       position: absolute;
       width: 150px;
@@ -39,11 +36,9 @@
       transition: transform 0.5s ease, opacity 0.3s ease;
       z-index: 20;
     }
-
     #leftHalf, #rightHalf { opacity: 0; }
     #leftHalf { left: 0; }
     #rightHalf { right: 0; }
-
     #fortune {
       position: absolute;
       top: 50%;
@@ -62,12 +57,10 @@
       z-index: 10;
       white-space: nowrap;
     }
-
     @keyframes flicker {
       0%,100%{opacity:1}10%{opacity:.8}20%{opacity:1}30%{opacity:.6}40%{opacity:1}50%{opacity:.9}60%{opacity:.95}70%{opacity:1}80%{opacity:.85}90%{opacity:1}
     }
     .flicker{animation:flicker 1s ease-in-out}
-
     .eye {
       position: fixed;
       width: 80px;
@@ -81,7 +74,6 @@
     @keyframes eyeAppear {
       0% {opacity:0; transform: scale(0.5);} 10%{opacity:1; transform: scale(1);} 90%{opacity:1;} 100%{opacity:0; transform: scale(0.5);} 
     }
-
     #resetBtn {
       margin-top: 220px;
       background:#222;
@@ -97,21 +89,14 @@
       transition: opacity 0.5s ease;
     }
     #resetBtn:hover{background:#444}
-      .spider {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: url('https://i.imgur.com/d1U7k3G.png') no-repeat center/contain;
-      animation: crawl 3s linear forwards;
+    .animated-spider {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      background: url('https://i.imgur.com/vU3PNoU.gif') no-repeat center/contain;
+      z-index: 9999;
       pointer-events: none;
     }
-
-    @keyframes crawl {
-      from { transform: translateY(0); opacity: 1; }
-      to { transform: translateY(100px); opacity: 0; }
-    }
-</style>
-<style>
     #loadingScreen {
       position: fixed;
       top: 0;
@@ -128,7 +113,25 @@
       z-index: 9999;
       animation: flicker 2s infinite;
     }
+  #spiderMessages {
+      position: fixed;
+      bottom: 10px;
+      left: 10px;
+      max-width: 250px;
+      font-family: monospace;
+      font-size: 0.75rem;
+      color: #ccc;
+      z-index: 9999;
+    }
+    .spider-line {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    .spider-line.visible {
+      opacity: 1;
+    }
   </style>
+
 </head>
 <body>
   <div id="loadingScreen">summoning your misfortune...</div>
@@ -141,7 +144,6 @@
   </div>
   <button id="resetBtn">reset the cookie</button>
   <audio id="crackSound" preload="auto" src="https://cdn.pixabay.com/download/audio/2022/03/30/audio_67dbe492d6.mp3?filename=crack-2-113172.mp3"></audio>
-
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const loading = document.getElementById('loadingScreen');
@@ -164,46 +166,36 @@
         "You laughed too loudly. They heard.",
         "Your phone is listening closely.",
         "Your sock will return wetter.",
-        "You will hear a doorbell that lies.",
-        "Your mirror will blink when you do.",
-        "You will lose your keys when most needed.",
-        "Your printer will jam at the worst time.",
-        "Your shopping cart will check itself out.",
-        "Your coffee will taste like regret.",
-        "You will itch. Someone is watching.",
-        "Your name is written in the clouds.",
-        "Your browser is humming softly.",
-        "Your pencil will snap under pressure.",
-        "Your light will flicker without reason.",
-        "Your shadow will lag behind you.",
-        "Your old tweet will resurface.",
-        "Your chair will squeak at the worst time.",
-        "You will be followed by a raincloud.",
-        "Your shoe will betray you mid-step.",
-        "Your Wi-Fi will fail right before the upload.",
-        "Your smart speaker will laugh tonight.",
-        "Your pet is staring at something else.",
-        "Your password has changed without you.",
-        "Your plant fears your presence.",
-        "Your alarm will forget the exam.",
-        "Your middle name is known to strangers.",
-        "Your autocorrect will reveal too much.",
-        "Your favorite mug will crack tonight.",
-        "Your streetlight will go dark.",
-        "Your seat has already been taken.",
-        "You will get a mystery notification.",
-        "Your tire will find a pothole.",
-        "Your playlist will betray you.",
-        "Your pen will leak in your pocket.",
-        "Your meeting began without you.",
-        "Your elevator will skip your floor.",
-        "Your receipt will total more than it should.",
-        "Your echo will come back different.",
-        "Your photo app will open itself.",
-        "Your lock will jam tomorrow.",
-        "Your email will send before it's ready.",
-        "Your room will feel colder.",
-        "Your calendar forgot a birthday."
+        "Your next drink will betray you.",
+        "You are being haunted by a lowercase ghost.",
+        "You will misplace your dignity briefly.",
+        "You will meet a squirrel with opinions.",
+        "Your favorite snack is judging you.",
+        "A pigeon has marked you for later.",
+        "You are not the main character today.",
+        "You will stub your toe in 3... 2...",
+        "Beware of smiling plants.",
+        "Your laugh will echo too long.",
+        "You’ll forget why you entered the room again.",
+        "The next mirror will blink first.",
+        "Your shadow is plotting.",
+        "Something in your fridge just sighed.",
+        "There’s a meeting about you later.",
+        "Your pillow knows your secrets.",
+        "You will sneeze at the worst possible time.",
+        "There’s something in your shoes.",
+        "You’re being followed by a slightly off melody.",
+        "You will momentarily become a static glitch.",
+        "Your playlist will expose you.",
+        "The void just bookmarked you.",
+        "You are allergic to destiny.",
+        "Something is mimicking your voice.",
+        "Your plants are gossiping.",
+        "You will lose a sock you weren’t wearing.",
+        "Your next yawn will summon something.",
+        "You stepped on an ancient curse.",
+        "There’s something under your keyboard.",
+        "You will taste shadows briefly."
       ];
 
       const maybeShowEye = () => {
@@ -219,30 +211,23 @@
 
       whole.addEventListener('click', () => {
         const msg = fortunes[Math.floor(Math.random() * fortunes.length)];
-
         whole.style.opacity = 0;
         left.style.opacity  = 1;
         right.style.opacity = 1;
         left.style.transform  = 'translateX(-50px) translateY(0)';
         right.style.transform = 'translateX(70px) translateY(0) rotate(15deg)';
-
         audio.currentTime = 0;
         audio.play().catch(()=>{});
-
         fortune.textContent = msg;
         fortune.style.opacity   = 1;
         fortune.style.transform = 'translate(-50%, -100%) scale(1)';
         fortune.classList.add('flicker');
         setTimeout(() => fortune.classList.remove('flicker'), 1000);
-
         whole.style.pointerEvents = 'none';
-
         reset.style.opacity = 1;
         reset.style.pointerEvents = 'auto';
         maybeShowEye();
       });
-
-      
 
       reset.addEventListener('click', () => {
         whole.style.opacity = 1;
@@ -256,9 +241,154 @@
         reset.style.pointerEvents = 'none';
         whole.style.pointerEvents = 'auto';
       });
+
+      const spider = document.createElement('div');
+      spider.className = 'animated-spider';
+      document.body.appendChild(spider);
+
+      let spiderX = window.innerWidth / 2;
+      let spiderY = window.innerHeight / 2;
+      let spiderVX = (Math.random() * 2 - 1) * 0.5;
+      let spiderVY = (Math.random() * 2 - 1) * 0.5;
+      let moving = true;
+
+      function updateSpider() {
+        const cookie = document.getElementById('cookieContainer');
+        const cookieRect = cookie.getBoundingClientRect();
+        const centerX = cookieRect.left + cookieRect.width / 2;
+        const centerY = cookieRect.top + cookieRect.height / 2;
+
+        const dxToCenter = spiderX - centerX;
+        const dyToCenter = spiderY - centerY;
+        const distToCenter = Math.sqrt(dxToCenter * dxToCenter + dyToCenter * dyToCenter);
+
+        if (distToCenter > 300) {
+          const angleBack = Math.atan2(centerY - spiderY, centerX - spiderX);
+          spiderVX = Math.cos(angleBack) * 0.5;
+          spiderVY = Math.sin(angleBack) * 0.5;
+        }
+
+        if (moving) {
+          spiderX += spiderVX;
+          spiderY += spiderVY;
+
+          spider.style.left = spiderX + 'px';
+          spider.style.top = spiderY + 'px';
+          const angle = Math.atan2(spiderVY, spiderVX);
+          spider.style.transform = `rotate(${angle}rad)`;
+
+          if (Math.random() < 0.005) moving = false;
+        } else if (Math.random() < 0.01) {
+          moving = true;
+          spiderVX = (Math.random() * 2 - 1) * 0.5;
+          spiderVY = (Math.random() * 2 - 1) * 0.5;
+        }
+
+        requestAnimationFrame(updateSpider);
+      }
+
+      updateSpider();
+
+      const spiderMessages = [
+        "pls stop tormenting me",
+        "i am just trying to crawl here :(",
+        "what did i ever do to you?",
+        "why do you keep touching me?",
+        "i'm just a little guy",
+        "this is my corner",
+        "leave me alone pls",
+        "do you poke all your guests?",
+        "i know 8 ways to disappear",
+        "you're scaring me",
+        "this isn't spider-friendly",
+        "do i look like a toy?",
+        "i'm filing a complaint",
+        "my legs are tired",
+        "is this necessary?",
+        "you should fear what i summon",
+        "crawling is not a crime",
+        "your mouse smells weird",
+        "i don't want any trouble",
+        "stop it or i’ll call the centipede",
+        // Ridiculous messages
+        "i have taxes to file",
+        "that’s my emotional support wall",
+        "are you my therapist now?",
+        "i have a podcast about this",
+        "do you want to join my pyramid scheme?",
+        "i once starred in a soap opera",
+        "please respect my boundaries and my hat",
+        "my cousin’s a tarantula and he lifts",
+        "you're interrupting my sitcom marathon",
+        "i identify as a desk accessory",
+        "this is the worst airbnb ever",
+        "i write spider fanfiction",
+        "my resume is stronger than yours",
+        "do not perceive me",
+        "this web cost me 3 weeks' rent",
+        "are you projecting?",
+        "my name is craig and i deserve better",
+        "i came here to spin",
+        "that’s harassment in spider law",
+        "this isn’t my final form"
+      ];
+
+      const spiderMessagesDiv = document.getElementById('spiderMessages');
+      let spiderTouchCount = 0;
+      let spiderCooldown = false;
+      const displayedLines = [];
+
+      function addSpiderMessage() {
+        if (displayedLines.length === 0) {
+          const title = document.createElement('div');
+          title.className = 'spider-line visible';
+          title.style.fontWeight = 'bold';
+          title.style.marginBottom = '5px';
+          title.textContent = 'message from the spider:';
+          spiderMessagesDiv.appendChild(title);
+          displayedLines.push(title);
+        }
+
+        const line = document.createElement('div');
+        line.className = 'spider-line';
+        line.textContent = spiderMessages[Math.floor(Math.random() * spiderMessages.length)];
+        spiderMessagesDiv.appendChild(line);
+        displayedLines.push(line);
+        requestAnimationFrame(() => line.classList.add('visible'));
+
+        if (displayedLines.length > 6) {
+          const old = displayedLines[1]; // skip the title line
+          old.classList.remove('visible');
+          displayedLines.splice(1, 1);
+          setTimeout(() => old.remove(), 500);
+        }
+      }
+
+      document.addEventListener('mousemove', e => {
+        const dx = spiderX - e.clientX;
+        const dy = spiderY - e.clientY;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 60) {
+          const angle = Math.atan2(dy, dx);
+          spiderVX = Math.cos(angle) * 0.5;
+          spiderVY = Math.sin(angle) * 0.5;
+          moving = true;
+
+          if (!spiderCooldown) {
+            spiderTouchCount++;
+            if (spiderTouchCount >= 3) {
+              addSpiderMessage();
+              spiderTouchCount = 0;
+              spiderCooldown = true;
+              setTimeout(() => { spiderCooldown = false; }, 5000);
+            }
+          }
+        }
+      });
     });
   </script>
   <img src="https://i.imgur.com/xDdKwVb.png" style="position: fixed; top: 0; left: 0; width: 100px; height: auto; z-index: 2; opacity: 0.6; pointer-events: none;">
   <img src="https://i.imgur.com/xDdKwVb.png" style="position: fixed; top: 0; right: 0; width: 100px; height: auto; z-index: 2; opacity: 0.6; pointer-events: none; transform: scaleX(-1);">
+  <div id="spiderMessages"></div>
 </body>
 </html>
